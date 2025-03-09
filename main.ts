@@ -155,6 +155,7 @@ if (import.meta.main) {
 // * Download current news as string to fixtures for testing
 // * Rename folder to nahbus-news-mailer
 // * Setup git
+// * change permission url to apples mailer
 // * Setup secrets in github
 // * push to github
 // * Add README
