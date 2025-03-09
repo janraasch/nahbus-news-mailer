@@ -1,0 +1,28 @@
+name: nahbus news
+
+on:
+  schedule:
+    - cron: "0 2 * * *" # Runs at 2:00 AM UTC every day. 3 AM Berlin Winter Time. 4 AM Berlin Summer Time.
+  workflow_dispatch: # Allows manual triggering // TODO: Remove this after testing
+
+jobs:
+  fetch-news:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: 2.2.3
+
+      - name: Run News Script
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_FROM: ${{ secrets.SMTP_FROM }}
+          SMTP_TO: ${{ secrets.SMTP_TO }}
+        run: deno task start
