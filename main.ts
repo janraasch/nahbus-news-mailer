@@ -153,8 +153,7 @@ if (import.meta.main) {
 // * Extract non-sideeffecty functions to lib
 // * Add tests
 // * Download current news as string to fixtures for testing
-// * Rename folder to nahbus-news-mailer
-// * Setup git
+// * Extract news in one step. Then send email in a second step. So we can make sure we do not log anything to the console on the second step.
 // * change permission url to apples mailer
 // * Setup secrets in github
 // * push to github
