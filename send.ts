@@ -23,6 +23,7 @@ async function sendEmail(
     username: checkEnv("SMTP_USERNAME"),
     password: checkEnv("SMTP_PASSWORD"),
     protocol: "STARTTLS",
+    auth: "LOGIN",
   };
 
   try {
