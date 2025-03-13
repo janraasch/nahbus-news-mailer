@@ -61,7 +61,7 @@ jobs:
 
       - name: Send Email
         run: |
-          if ! deno run --allow-net --allow-env --allow-read send.ts ./tmp/news.json > /dev/null 2>&1; then
+          if ! deno run --allow-net --allow-env --allow-read send.ts ./tmp/news.json; then
             echo "Email sending failed"
             exit 1
           fi
