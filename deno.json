@@ -1,7 +1,7 @@
 {
   "tasks": {
-    "dev": "deno run --watch --allow-net=www.nahbus.de,smtp.gmail.com --allow-read --allow-env main.ts",
-    "start": "deno run --allow-net=www.nahbus.de,smtp.gmail.com --allow-read --allow-env main.ts",
+    "fetch": "deno run --allow-net=www.nahbus.de --allow-write fetch.ts",
+    "send": "deno run --allow-net=smtp.gmail.com --allow-read --allow-env send.ts",
     "lint": "deno lint",
     "fmt": "deno fmt",
     "test": "deno test"
@@ -14,7 +14,8 @@
   "permissions": {
     "net": ["www.nahbus.de", "smtp.gmail.com"],
     "read": true,
-    "env": true
+    "env": true,
+    "write": true
   },
   "deno": {
     "version": "2.2.3"

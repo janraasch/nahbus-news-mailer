@@ -1,0 +1,63 @@
+name: News Update
+
+on:
+  schedule:
+    - cron: "0 2 * * *" # Runs at 2:00 AM UTC every day. 3 AM Berlin Winter Time. 4 AM Berlin Summer Time.
+  workflow_dispatch:      # Allows manual triggering
+
+jobs:
+  news-update:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Fetch News
+        id: fetch
+        run: |
+          deno run --allow-net --allow-write fetch.ts ./tmp/news.json
+        continue-on-error: true # Continue even if no news found
+
+      - name: Upload news data
+        uses: actions/upload-artifact@v4
+        with:
+          name: news-data
+          path: ./tmp/news.json
+          retention-days: 1
+
+  send-email:
+    needs: news-update
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Download news data
+        uses: actions/download-artifact@v4
+        with:
+          name: news-data
+          path: ./tmp
+
+      - name: Send Email
+        run: |
+          if ! deno run --allow-net --allow-env --allow-read send.ts ./tmp/news.json > /dev/null 2>&1; then
+            echo "Email sending failed"
+            exit 1
+          fi
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_FROM: ${{ secrets.SMTP_FROM }}
+          SMTP_TO: ${{ secrets.SMTP_TO }} 
