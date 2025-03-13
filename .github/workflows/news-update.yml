@@ -20,8 +20,8 @@ jobs:
       - name: Fetch News
         id: fetch
         run: |
+          mkdir -p ./tmp
           deno run --allow-net --allow-write fetch.ts ./tmp/news.json
-        continue-on-error: true # Continue even if no news found
 
       - name: Upload news data
         uses: actions/upload-artifact@v4
