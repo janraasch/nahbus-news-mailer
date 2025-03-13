@@ -6,7 +6,7 @@ on:
   workflow_dispatch:      # Allows manual triggering
 
 jobs:
-  news-update:
+  fetch-news:
     runs-on: ubuntu-latest
     
     steps:
@@ -31,7 +31,7 @@ jobs:
           retention-days: 1
 
   send-email:
-    needs: news-update
+    needs: fetch-news
     runs-on: ubuntu-latest
     
     steps:
