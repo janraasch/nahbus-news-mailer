@@ -28,7 +28,7 @@ jobs:
         with:
           name: news-data
           path: ./tmp/news.json
-          retention-days: 1
+          retention-days: 14
 
   send-email:
     needs: fetch-news
