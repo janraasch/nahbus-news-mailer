@@ -22,12 +22,14 @@ async function sendEmail(
     port: parseInt(checkEnv("SMTP_PORT")),
     username: checkEnv("SMTP_USERNAME"),
     password: checkEnv("SMTP_PASSWORD"),
-    tls: true,
-    debug: true  // Enable debug mode to see more details
+    protocol: "STARTTLS",
   };
 
   try {
-    await client.connectTLS(config);
+    console.log("Connecting to SMTP server...");
+    await client.connect(config);
+    console.log("Connected, sending email...");
+    
     await client.send({
       from: checkEnv("SMTP_FROM"),
       to: checkEnv("SMTP_TO"),
@@ -35,6 +37,7 @@ async function sendEmail(
       content: contentText,
       html: contentHTML,
     });
+    console.log("Email sent successfully");
     await client.close();
   } catch (error) {
     console.error("SMTP Error:", error);
