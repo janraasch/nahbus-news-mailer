@@ -22,19 +22,24 @@ async function sendEmail(
     port: parseInt(checkEnv("SMTP_PORT")),
     username: checkEnv("SMTP_USERNAME"),
     password: checkEnv("SMTP_PASSWORD"),
+    tls: true,
+    debug: true  // Enable debug mode to see more details
   };
 
-  await client.connectTLS(config);
-
-  await client.send({
-    from: checkEnv("SMTP_FROM"),
-    to: checkEnv("SMTP_TO"),
-    subject: subject,
-    content: contentText,
-    html: contentHTML,
-  });
-
-  await client.close();
+  try {
+    await client.connectTLS(config);
+    await client.send({
+      from: checkEnv("SMTP_FROM"),
+      to: checkEnv("SMTP_TO"),
+      subject: subject,
+      content: contentText,
+      html: contentHTML,
+    });
+    await client.close();
+  } catch (error) {
+    console.error("SMTP Error:", error);
+    throw error;
+  }
 }
 
 if (import.meta.main) {
