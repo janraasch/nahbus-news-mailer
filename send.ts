@@ -45,6 +45,7 @@ if (import.meta.main) {
     const { date, newsItems } = newsData;
 
     if (newsItems.length === 0) {
+      console.error("No news found");
       Deno.exit(0); // Exit silently if no news
     }
 
@@ -58,7 +59,8 @@ if (import.meta.main) {
     );
     
     Deno.exit(0);
-  } catch (_error) {
+  } catch (error) {
+    console.error(error);
     Deno.exit(1);
   }
 } 
