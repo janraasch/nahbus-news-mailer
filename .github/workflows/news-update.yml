@@ -48,6 +48,17 @@ jobs:
           name: news-data
           path: ./tmp
 
+      - name: Check if news data exists
+        run: |
+          if [ ! -f ./tmp/news.json ]; then
+            echo "News data file does not exist"
+            exit 1
+          fi
+
+      - name: Print news data
+        run: |
+          cat ./tmp/news.json
+
       - name: Send Email
         run: |
           if ! deno run --allow-net --allow-env --allow-read send.ts ./tmp/news.json > /dev/null 2>&1; then
