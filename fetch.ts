@@ -5,7 +5,7 @@ if (import.meta.main) {
   
   console.log("Fetching website...");
   const url = "https://www.nahbus.de/meldungen-news/news";
-  const date = "2025-03-12"; // getYesterday(new Date());
+  const date = "2025-03-17"; // getYesterday(new Date());
   const websiteText = await fetchWebsite(url);
   const newsHTML = parseHTML(websiteText);
   const newsItems = extractNews(date, newsHTML);
