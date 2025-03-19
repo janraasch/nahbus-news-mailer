@@ -49,7 +49,7 @@ export async function fetchWebsite(url: string): Promise<string> {
     newsItems: Array<{ headline: string; description: string }>,
   ): string {
     return newsItems.map((item) =>
-      `<strong>${date} - ${item.headline}</strong><br><p>${item.description}</p>`
+      `<strong>${item.headline}</strong><br><p>${item.description}</p>`
     ).join("\n");
   }
   
@@ -58,7 +58,7 @@ export async function fetchWebsite(url: string): Promise<string> {
     newsItems: Array<{ headline: string; description: string }>,
   ): string {
     return newsItems.map((item) => `
-  ${date} - ${item.headline}
+  ${item.headline}
   
   ${item.description}
     `).join("\n");

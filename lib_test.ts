@@ -73,7 +73,7 @@ Deno.test("formatNewsHTML should format news items correctly", () => {
   const formatted = formatNewsHTML(date, newsItems);
   assertEquals(
     formatted,
-    "<strong>2024-03-20 - Test Headline</strong><br><p>Test Description</p>",
+    "<strong>Test Headline</strong><br><p>Test Description</p>",
   );
 });
 
@@ -86,7 +86,7 @@ Deno.test("formatNewsText should format news items correctly", () => {
   const formatted = formatNewsText(date, newsItems);
   assertEquals(
     formatted,
-    "\n  2024-03-20 - Test Headline\n  \n  Test Description\n    ",
+    "\n  Test Headline\n  \n  Test Description\n    ",
   );
 });
 
