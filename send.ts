@@ -55,8 +55,8 @@ if (import.meta.main) {
       Deno.exit(0); // Exit silently if no news
     }
 
-    const newsContentHTML = formatNewsHTML(date, newsItems);
-    const newsContentText = formatNewsText(date, newsItems);
+    const newsContentHTML = formatNewsHTML(newsItems);
+    const newsContentText = formatNewsText(newsItems);
 
     await sendEmail(
       `Nahbus News Update - ${date}`, 

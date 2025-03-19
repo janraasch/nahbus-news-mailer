@@ -65,12 +65,11 @@ Deno.test("extractNews should filter and format news items correctly", () => {
 });
 
 Deno.test("formatNewsHTML should format news items correctly", () => {
-  const date = "2024-03-20";
   const newsItems = [
     { headline: "Test Headline", description: "Test Description" },
   ];
 
-  const formatted = formatNewsHTML(date, newsItems);
+  const formatted = formatNewsHTML(newsItems);
   assertEquals(
     formatted,
     "<strong>Test Headline</strong><br><p>Test Description</p>",
@@ -78,12 +77,11 @@ Deno.test("formatNewsHTML should format news items correctly", () => {
 });
 
 Deno.test("formatNewsText should format news items correctly", () => {
-  const date = "2024-03-20";
   const newsItems = [
     { headline: "Test Headline", description: "Test Description" },
   ];
 
-  const formatted = formatNewsText(date, newsItems);
+  const formatted = formatNewsText(newsItems);
   assertEquals(
     formatted,
     "\n  Test Headline\n  \n  Test Description\n    ",

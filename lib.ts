@@ -45,7 +45,6 @@ export async function fetchWebsite(url: string): Promise<string> {
   }
   
   export function formatNewsHTML(
-    date: string,
     newsItems: Array<{ headline: string; description: string }>,
   ): string {
     return newsItems.map((item) =>
@@ -54,7 +53,6 @@ export async function fetchWebsite(url: string): Promise<string> {
   }
   
   export function formatNewsText(
-    date: string,
     newsItems: Array<{ headline: string; description: string }>,
   ): string {
     return newsItems.map((item) => `
