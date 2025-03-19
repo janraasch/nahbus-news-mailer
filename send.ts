@@ -1,4 +1,4 @@
-import { SmtpClient } from "https://deno.land/x/smtp@v0.7.0/mod.ts";
+import nodemailer from "npm:nodemailer@6.9.9";
 import { formatNewsHTML, formatNewsText } from "./lib.ts";
 
 function checkEnv(key: string): string {
@@ -15,31 +15,29 @@ async function sendEmail(
   contentText: string,
   contentHTML: string,
 ) {
-  const client = new SmtpClient();
-
-  const config = {
-    hostname: checkEnv("SMTP_HOST"),
+  const transporter = nodemailer.createTransport({
+    host: checkEnv("SMTP_HOST"),
     port: parseInt(checkEnv("SMTP_PORT")),
-    username: checkEnv("SMTP_USERNAME"),
-    password: checkEnv("SMTP_PASSWORD"),
-    protocol: "STARTTLS",
-    auth: "LOGIN",
-  };
+    secure: true, // true for 465, false for other ports like 587
+    auth: {
+      user: checkEnv("SMTP_USERNAME"),
+      pass: checkEnv("SMTP_PASSWORD"),
+    },
+  });
 
   try {
     console.log("Connecting to SMTP server...");
-    await client.connect(config);
+    await transporter.verify();
     console.log("Connected, sending email...");
     
-    await client.send({
+    await transporter.sendMail({
       from: checkEnv("SMTP_FROM"),
       to: checkEnv("SMTP_TO"),
       subject: subject,
-      content: contentText,
+      text: contentText,
       html: contentHTML,
     });
     console.log("Email sent successfully");
-    await client.close();
   } catch (error) {
     console.error("SMTP Error:", error);
     throw error;
